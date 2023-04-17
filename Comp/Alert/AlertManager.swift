@@ -1,17 +1,17 @@
 //
 //  AlertManager.swift
-//  Comp
+//  Vakifbank
 //
-//  Created by Egehan KARAKÖSE (Dijital Kanallar Uygulama Geliştirme Müdürlüğü) on 27.03.2022.
+//  Created by Yasin TURKOGLU on 27.07.2019.
+//  Copyright © 2019 Vakifbank. All rights reserved.
 //
 
-import Common
 import PKHUD
+import Common
 
 // swiftlint:disable function_parameter_count
 
 public var publicResponder: UIViewController!
-
 
 public enum AlertIcon: Equatable {
     case successIcon
@@ -20,13 +20,14 @@ public enum AlertIcon: Equatable {
     case infoIcon
 	case custom(imageName: String)
     case largeIcon(image: UIImage)
+    case closeIcon
     
 	var iconImage: UIImage? {
 		switch self {
 		case .successIcon:
 			return UIImage(named: "doneIcon")
 		case .warningIcon:
-			return UIImage(named: "warning")
+            return UIImage(named: "infoIcon", in: .comp, compatibleWith: nil)
 		case .emptySuccessIcon:
             return UIImage(named: "successIcon")
         case .infoIcon:
@@ -35,15 +36,17 @@ public enum AlertIcon: Equatable {
             return UIImage(named: imageName)
         case .largeIcon(let image):
             return image
+        case .closeIcon:
+            return UIImage(systemName: "xmark")?.withTintColor(.black, renderingMode: .alwaysOriginal)
         }
 	}
 }
 
 public enum AlertStyle {
     //swiftlint:disable line_length
-    case style1(title: String?, message: String?, topIcon: AlertIcon?, shouldDismissWhenTappedAround: Bool, actions: [AlertAction]?)
-    case style2(title: String?, placeHolder: String?, initialText: String?, isEnabled: Bool, maxLength: Int, acceptables: CharacterSet?, keyboardType: UIKeyboardType?, cancelButtonTitle: String?, approveButtonTitle: String?, shouldDismissWhenTappedAround: Bool, dismissHandler: (String?) -> Void, minLength: Int?)
-    case neverDismiss(title: String?, message: String?, topIcon: AlertIcon?, shouldDismissWhenTappedAround: Bool, actions: [AlertAction]?)
+    case style1(title: String?, message: String?, topIcon: AlertIcon?, closeIcon: AlertIcon?, shouldDismissWhenTappedAround: Bool, actions: [AlertAction]?, hideTopInfo: Bool)
+    case style2(title: String?, placeHolder: String?, initialText: String?, isEnabled: Bool, maxLength: Int, acceptables: CharacterSet?, keyboardType: UIKeyboardType?, cancelButtonTitle: String?, approveButtonTitle: String?, shouldDismissWhenTappedAround: Bool, dismissHandler: (String?) -> Void, minLength: Int?, hideTopInfo: Bool)
+    case neverDismiss(title: String?, message: String?, topIcon: AlertIcon?, shouldDismissWhenTappedAround: Bool, actions: [AlertAction]?, hideTopInfo: Bool)
     case custom(viewModel: CustomAlertViewModelProtocol)
 
 }
@@ -94,27 +97,23 @@ public func showAlert(message: String?, topIcon: AlertIcon, shouldDismissWhenTap
     
 }
 
-public func showAlert(withTitle title: String?, message: String?, topIcon: AlertIcon? = nil, shouldDismissWhenTappedAround: Bool? = nil, actions: [AlertAction]? = nil, didDismiss: VoidHandler? = nil) {
+public func showAlert(withTitle title: String?, message: String?, view: UIView? = nil, topIcon: AlertIcon? = nil, showCloseIcon: Bool = false, shouldDismissWhenTappedAround: Bool? = nil, actions: [AlertAction]? = nil, didDismiss: VoidHandler? = nil, hideTopInfo: Bool = false) {
     func operation() {
         var dismissWhenTappedAround: Bool = true
         if let receivedShouldDismissWhenTappedAround = shouldDismissWhenTappedAround {
             dismissWhenTappedAround = receivedShouldDismissWhenTappedAround
         }
-        if let receivedActions = actions, !receivedActions.isEmpty {
-            dismissWhenTappedAround = false
-            //iş birimi talebi ile yapıldı. buton varken boşlukta kapanma talep edilirse TND-5246
-            // bu talep kapsamında yapıldığını iletiriz.
-        }
         
-        var titleTmp: String? = title
-        var topAlertIcon: AlertIcon? = topIcon
-        if let title = title, title == "Hata".localized {
-            topAlertIcon = AlertIcon.warningIcon
-            titleTmp = nil
-        }
+        let titleTmp: String? = title
+        let topAlertIcon: AlertIcon? = topIcon
         
         UIAccessibility.post(notification: .announcement, argument: "\(title.withDefault("")), \(message.withDefault(""))")
-        AlertManager().showAlertViewWith(style: .style1(title: titleTmp, message: message, topIcon: topAlertIcon, shouldDismissWhenTappedAround: dismissWhenTappedAround, actions: actions), didDismiss: didDismiss)
+        if let view = view {
+            AlertManager().showAlertViewWith(style: .style1(title: titleTmp, message: message, topIcon: topAlertIcon, closeIcon: showCloseIcon ? .closeIcon : nil, shouldDismissWhenTappedAround: dismissWhenTappedAround, actions: actions, hideTopInfo: hideTopInfo), view: view, didDismiss: didDismiss)
+        } else {
+            AlertManager().showAlertViewWith(style: .style1(title: titleTmp, message: message, topIcon: topAlertIcon, closeIcon: showCloseIcon ? .closeIcon : nil, shouldDismissWhenTappedAround: dismissWhenTappedAround, actions: actions, hideTopInfo: hideTopInfo), didDismiss: didDismiss)
+        }
+        
     }
     if Thread.isMainThread {
         operation()
@@ -135,7 +134,7 @@ public func showNeverDismissAlert(withTitle title: String?, message: String?, to
         if let receivedShouldDismissWhenTappedAround = shouldDismissWhenTappedAround {
             dismissWhenTappedAround = receivedShouldDismissWhenTappedAround
         }
-        AlertManager().showAlertViewWith(style: .neverDismiss(title: title, message: message, topIcon: topIcon, shouldDismissWhenTappedAround: dismissWhenTappedAround, actions: actions), didDismiss: didDismiss)
+        AlertManager().showAlertViewWith(style: .neverDismiss(title: title, message: message, topIcon: topIcon, shouldDismissWhenTappedAround: dismissWhenTappedAround, actions: actions, hideTopInfo: false), didDismiss: didDismiss)
     }
     if Thread.isMainThread {
         operation()
@@ -148,7 +147,7 @@ public func showNeverDismissAlert(withTitle title: String?, message: String?, to
 
 public func showAlert(withTextInput title: String?, placeHolder: String?, initialText: String? = nil, isEnabled: Bool = true, maxLength: Int, acceptables: CharacterSet?, keyboardType: UIKeyboardType?, cancelButtonTitle: String?, approveButtonTitle: String?, dismissHandler: @escaping (String?) -> Void, minLength: Int = 0, didDismiss: VoidHandler? = nil) {
     func operation() {
-        AlertManager().showAlertViewWith(style: .style2(title: title, placeHolder: placeHolder, initialText: initialText, isEnabled: isEnabled, maxLength: maxLength, acceptables: acceptables, keyboardType: keyboardType, cancelButtonTitle: cancelButtonTitle, approveButtonTitle: approveButtonTitle, shouldDismissWhenTappedAround: false, dismissHandler: dismissHandler, minLength: minLength), didDismiss: didDismiss)
+        AlertManager().showAlertViewWith(style: .style2(title: title, placeHolder: placeHolder, initialText: initialText, isEnabled: isEnabled, maxLength: maxLength, acceptables: acceptables, keyboardType: keyboardType, cancelButtonTitle: cancelButtonTitle, approveButtonTitle: approveButtonTitle, shouldDismissWhenTappedAround: false, dismissHandler: dismissHandler, minLength: minLength, hideTopInfo: false), didDismiss: didDismiss)
     }
     if Thread.isMainThread {
         operation()
@@ -259,7 +258,25 @@ public class AlertManager {
             alertHolderView = currentAlertHolderView
             delay = 0.4
         } else {
-            guard let currentControllerView = AlertManager.getRootViewController().view else { return }
+            guard let currentControllerView = getTopMostViewController()?.view else { return }
+            let newAlertHolderView = AlertHolderView()
+            newAlertHolderView.fitInto(view: currentControllerView)
+            newAlertHolderView.bringSubviewToFront(currentControllerView)
+            alertHolderView = newAlertHolderView
+        }
+        alertHolderView.accessibilityViewIsModal = true
+        alertHolderView?.showAlertWith(style: style, completion: completion, didDismiss: didDismiss, delay: delay)
+    }
+    
+    public func showAlertViewWith(style: AlertStyle, view: UIView?, completion: ((AlertView?) -> Void)? = nil, didDismiss: VoidHandler? = nil) {
+        HUD.hide()
+        var delay: Double = 0.0
+        var alertHolderView: AlertHolderView!
+        if let currentAlertHolderView = AlertManager.getAlertHolderView() {
+            alertHolderView = currentAlertHolderView
+            delay = 0.4
+        } else {
+            guard let currentControllerView = view else { return }
             let newAlertHolderView = AlertHolderView()
             let lastSubView = currentControllerView.subviews.last
             newAlertHolderView.fitInto(view: currentControllerView)

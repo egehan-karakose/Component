@@ -114,6 +114,7 @@ public class AlertHolderView: UIView, AlertViewDelegate {
                     alertView.selfYConstraint.constant = 0.0
                     self.alertViewCenterYConstraint = alertView.selfYConstraint
                     self.alertViews.append(alertView)
+                    self.initCloseButton(alertView: alertView)
                     UIAccessibility.post(notification: .screenChanged, argument: alertView.subviews.first)
                     completion?(alertView)
                     UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
@@ -124,6 +125,23 @@ public class AlertHolderView: UIView, AlertViewDelegate {
                 }
             }
         }
+    }
+    
+    private func initCloseButton(alertView: AlertView) {
+        let buttonWidth = 50.0
+        let button = UIButton(frame: CGRect(x: alertView.frame.maxX - (buttonWidth / 2),
+                                            y: alertView.frame.minY - (buttonWidth / 2),
+                                            width: buttonWidth,
+                                            height: buttonWidth))
+        
+        button.setImage(UIImage.init(named: "Combined Shape"), for: .normal)
+        button.addTarget(self, action: #selector(closeAlertView), for: .touchUpInside)
+        
+        self.addSubview(button)
+    }
+    
+    @objc func closeAlertView() {
+        dismissAlert()
     }
     
     func showAlertWith(style: AlertStyle, completion: ((AlertView?) -> Void)? = nil, didDismiss: VoidHandler? = nil, delay: Double? = nil) {

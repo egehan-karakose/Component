@@ -1,8 +1,9 @@
 //
 //  CustomableAlertDecoratorProtocol.swift
-//  Comp
+//  UIComp
 //
-//  Created by Egehan KARAKÖSE (Dijital Kanallar Uygulama Geliştirme Müdürlüğü) on 27.03.2022.
+//  Created by Volkan SÖNMEZ on 12.05.2020.
+//  Copyright © 2020 Vakifbank. All rights reserved.
 //
 
 import Foundation

@@ -16,7 +16,7 @@ class FilterBarButtonItem: UIBarButtonItem {
         self.callback = callback
         let button = UIButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        let image = UIImage(named: "filter", in: Bundle.uiComp, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: "filter", in: Bundle.comp, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(didFilterBarButton), for: .touchUpInside)
         self.customView = button

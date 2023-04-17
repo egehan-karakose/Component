@@ -109,7 +109,7 @@ public final class CollapsibleFormSection: FormSection {
         if !isCollapsedForInitial {
             angle *= -1
         }
-        imgView.image = UIImage(named: "rightArrow", in: .uiComp, compatibleWith: nil)?.rotate(radians: angle)
+        imgView.image = UIImage(named: "rightArrow", in: .comp, compatibleWith: nil)?.rotate(radians: angle)
         imgView.contentMode = .scaleAspectFit
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onStateChange)))

@@ -36,7 +36,7 @@ public class FormEmptyDataView: UIView {
             .setForegroundColor(.appBlack1)
             .build(with: viewModel.title)
         
-        emptyImageView.image = viewModel.image ?? UIImage(named: "noItem", in: .uiComp, compatibleWith: nil)
+        emptyImageView.image = viewModel.image ?? UIImage(named: "noItem", in: .comp, compatibleWith: nil)
         
         for view in bottomStackView.arrangedSubviews {
             bottomStackView.removeArrangedSubview(view)

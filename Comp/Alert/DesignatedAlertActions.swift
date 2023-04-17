@@ -9,7 +9,8 @@ import Foundation
 import Common
 
 public enum DesignatedAlertActions {
-    
+    case okAction
+    case okActionWithHandler(_ handler: VoidHandler?)
     case doneAction
     case doneActionWithHandler(_ handler: VoidHandler?)
     case approveAction
@@ -24,10 +25,14 @@ public enum DesignatedAlertActions {
     
     public var action: AlertAction {
         switch self {
-        case .doneAction:
+        case .okAction:
             return AlertAction(title: "TAMAM".localized, style: .default)
-        case .doneActionWithHandler(let handler):
+        case .okActionWithHandler(let handler):
             return AlertAction(title: "TAMAM".localized, style: .default, handler: handler)
+        case .doneAction:
+            return AlertAction(title: "Anladım".localized, style: .default)
+        case .doneActionWithHandler(let handler):
+            return AlertAction(title: "Anladım".localized, style: .default, handler: handler)
         case .approveAction:
             return AlertAction(title: "Onay".localized, style: .default)
         case .approveActionWithHandler(let handler):

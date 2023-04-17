@@ -18,7 +18,7 @@ public class HomeBarButton: UIBarButtonItem {
         self.callback = callback
         let button = UIButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        let image = UIImage(named: "homeButton", in: .uiComp, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: "homeButton", in: .comp, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(didTapHomeBarButton), for: .touchUpInside)
         self.customView = button

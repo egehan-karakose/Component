@@ -21,7 +21,7 @@ public class ButtonContainerView: UIView {
     }
     
     private func setUp() {
-        Bundle.uiComp!.loadNibNamed("ButtonContainerView", owner: self, options: nil)
+        Bundle.comp!.loadNibNamed("ButtonContainerView", owner: self, options: nil)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         contentView.height(constant: 52)

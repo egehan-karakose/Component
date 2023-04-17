@@ -1,16 +1,14 @@
 //
 //  AlertView.swift
-//  Comp
+//  Vakifbank
 //
-//  Created by Egehan KARAKÖSE (Dijital Kanallar Uygulama Geliştirme Müdürlüğü) on 27.03.2022.
+//  Created by Yasin TURKOGLU on 27.07.2019.
+//  Copyright © 2019 Vakifbank. All rights reserved.
 //
 
 import Common
 
-// swiftlint:disable line_length
-// swiftlint:disable file_length
-
-protocol AlertViewDelegate: class {
+protocol AlertViewDelegate: AnyObject {
     func dismissAlert()
 }
 
@@ -28,6 +26,7 @@ public class AlertView: UIView {
     private var dismissActionHandler: VoidHandler!
     private var currentStyle: AlertStyle!
     private var messageLabel: UILabel?
+    private var hideTopInfo: Bool = false
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -42,9 +41,10 @@ public class AlertView: UIView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .white
-        layer.cornerRadius = 12.0
+        layer.cornerRadius = 32.0
         clipsToBounds = true
         alpha = 0.0
+        getAlertStyle(style: style)
         setupUI()
         setupContent(style: style)
     }
@@ -58,35 +58,53 @@ public class AlertView: UIView {
         if screenWidth > 414.0 {
             screenWidth = 414.0
         }
-        stackView.fitInto(view: self, paddings: UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0))
-        stackView.widthAnchor.constraint(equalToConstant: screenWidth - 64.0).isActive = true
+        stackView.fitInto(view: self, paddings: UIEdgeInsets(top: 16.0, left: 24.0, bottom: 24.0, right: 16.0))
+        stackView.widthAnchor.constraint(equalToConstant: screenWidth - 96.0).isActive = true
         stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0).isActive = true
+        
+        if !hideTopInfo {
+            let view = UIImageView(image: UIImage(named: "infoIcon", in: .comp, compatibleWith: nil))
+            let size: CGFloat = 78
+            let halfSize = size / 2
+            view.frame = CGRect(x: ((UIScreen.main.bounds.size.width - 48) / 2) - halfSize,
+                                y: -(halfSize + 16),
+                                width: size,
+                                height: size)
+            addSubview(view)
+            clipsToBounds = false
+        }
+        
         layoutIfNeeded()
     }
     
-    // swiftlint:disable cyclomatic_complexity
-    private func setupContent(style: AlertStyle) {
+    private func getAlertStyle(style: AlertStyle) {
         switch style {
-        case .style1(_, _, _, let shouldDismissWhenTappedAround, _):
+        case .style1(_, _, _, _, let shouldDismissWhenTappedAround, _, let hideTopInfo):
             self.shouldDismissWhenTappedAround = shouldDismissWhenTappedAround
-        case .style2(_, _, _, _, _, _, _, _, _, let shouldDismissWhenTappedAround, _, _):
+            self.hideTopInfo = hideTopInfo
+        case .style2(_, _, _, _, _, _, _, _, _, let shouldDismissWhenTappedAround, _, _, let hideTopInfo):
             self.shouldDismissWhenTappedAround = shouldDismissWhenTappedAround
-        case .neverDismiss(_, _, _, let shouldDismissWhenTappedAround, _):
+            self.hideTopInfo = hideTopInfo
+        case .neverDismiss(_, _, _, let shouldDismissWhenTappedAround, _, let hideTopInfo):
             self.shouldDismissWhenTappedAround = shouldDismissWhenTappedAround
+            self.hideTopInfo = hideTopInfo
         case .custom(let viewModel):
             self.shouldDismissWhenTappedAround = viewModel.shouldDismissWhenTappedAround
         }
         currentStyle = style
+    }
+    
+    private func setupContent(style: AlertStyle) {
         switch style {
-        case .style1(let title, let message, let topIcon, _, let actions):
+        case .style1(let title, let message, let topIcon, let closeIcon, _, let actions, _):
             var isLargeIcon = false
             if let receivedTopIcon = topIcon, let icon = receivedTopIcon.iconImage {
                 isLargeIcon = receivedTopIcon == .largeIcon(image: icon)
-                create(icon: icon, isLargeIcon: isLargeIcon)
+                create(icon: icon, closeIcon: closeIcon?.iconImage, isLargeIcon: isLargeIcon)
             }
             if let receivedTitle = title {
                 let nextLineAddition = (message == nil) ? "\n" : ""
-                create(title: receivedTitle + nextLineAddition, isLargeIcon: isLargeIcon)
+                create(title: receivedTitle + nextLineAddition, closeIcon: closeIcon?.iconImage, isLargeIcon: isLargeIcon)
             }
             if let receivedMessage = message {
                 let previousLineAddition = (title == nil ? "\n" : "")
@@ -98,16 +116,19 @@ public class AlertView: UIView {
             } else {
                 createDismissButton(handler: nil)
             }
-        case .style2(let title, let placeHolder, let initialText, let isEnabled, let maxLength, let acceptables, let keyboardType, let cancelButtonTitle, let approveButtonTitle, _, let dismissHandler, let minLength):
+        case .style2(let title, let placeHolder, let initialText, let isEnabled, let maxLength, let acceptables, let keyboardType,
+                     let cancelButtonTitle, let approveButtonTitle, _, let dismissHandler, let minLength, _):
             if let receivedTitle = title {
                 create(title: receivedTitle)
             }
-            createTextField(placeHolder: placeHolder, initialText: initialText, isEnabled: isEnabled, maxLength: maxLength, acceptables: acceptables, keyboardType: keyboardType, minLength: minLength)
+            createTextField(placeHolder: placeHolder, initialText: initialText, isEnabled: isEnabled, maxLength: maxLength,
+                            acceptables: acceptables, keyboardType: keyboardType, minLength: minLength)
             createInputButton(cancelTitle: cancelButtonTitle, approveTitle: approveButtonTitle, handler: dismissHandler, minLength: minLength)
-            if let receivedInitialText = initialText, receivedInitialText.trimmingCharacters(in: .whitespacesAndNewlines) != "", let currentInputDoneButton = self.inputDoneButton {
+            if let receivedInitialText = initialText, receivedInitialText.trimmingCharacters(in: .whitespacesAndNewlines) != "",
+                let currentInputDoneButton = self.inputDoneButton {
                 currentInputDoneButton.isEnabled = true
             }
-        case .neverDismiss(let title, let message, let topIcon, _, let actions):
+        case .neverDismiss(let title, let message, let topIcon, _, let actions, _):
             if let receivedTopIcon = topIcon, let icon = receivedTopIcon.iconImage {
                 create(icon: icon)
             }
@@ -128,9 +149,8 @@ public class AlertView: UIView {
             createCustomView(viewModel: viewModel)
         }
     }
-    // swiftlint:enable cyclomatic_complexity
     
-    private func create(icon: UIImage, isLargeIcon: Bool = false) {
+    private func create(icon: UIImage, closeIcon: UIImage? = nil, isLargeIcon: Bool = false) {
         let holderView = UIView()
         let imageView = UIImageView()
         let imageSize = isLargeIcon ? CGFloat(172.0) : CGFloat(72.0)
@@ -151,17 +171,39 @@ public class AlertView: UIView {
         let imageViewBottomConstraint = imageView.bottomAnchor.constraint(equalTo: holderView.bottomAnchor, constant: 0.0)
         imageViewBottomConstraint.priority = UILayoutPriority(999)
         imageViewBottomConstraint.isActive = true
+        
+        if let closeIcon = closeIcon {
+            let imageViewClose = UIImageView()
+            imageViewClose.isUserInteractionEnabled = true
+            let imageSizeClose = CGFloat(50.0)
+            imageViewClose.contentMode = .scaleAspectFit
+            imageViewClose.image = closeIcon//UIImage(named: "closeDark")
+            imageViewClose.backgroundColor = .clear
+            imageViewClose.translatesAutoresizingMaskIntoConstraints = false
+            holderView.addSubview(imageViewClose)
+            imageViewClose.trailingAnchor.constraint(equalTo: holderView.trailingAnchor, constant: 10.0).isActive = true
+            imageViewClose.topAnchor.constraint(equalTo: holderView.topAnchor, constant: 0.0).isActive = true
+            imageViewClose.widthAnchor.constraint(equalToConstant: imageSizeClose).isActive = true
+            imageViewClose.heightAnchor.constraint(equalToConstant: imageSizeClose).isActive = true
+            imageViewClose.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeAlertView)))
+        }
+        
         holderView.layoutIfNeeded()
         stackView.addArrangedSubview(holderView)
     }
     
-    private func create(title: String, isLargeIcon: Bool = false) {
+    @objc func closeAlertView() {
+        guard let currentDelegate = self.delegate else { return }
+        currentDelegate.dismissAlert()
+    }
+    
+    private func create(title: String, closeIcon: UIImage? = nil, isLargeIcon: Bool = false) {
         let holderView = UIView()
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 16.0)
         label.textAlignment = .center
-        label.textColor = .textColor
+        label.textColor = .appBlack1
         label.numberOfLines = 0
         label.text = title
         label.accessibilityLabel = title
@@ -177,6 +219,23 @@ public class AlertView: UIView {
         label.leadingAnchor.constraint(equalTo: holderView.leadingAnchor, constant: 0.0).isActive = true
         label.trailingAnchor.constraint(equalTo: holderView.trailingAnchor, constant: 0.0).isActive = true
         holderView.layoutIfNeeded()
+        
+        if let closeIcon = closeIcon {
+            let imageViewClose = UIImageView()
+            imageViewClose.isUserInteractionEnabled = true
+            let imageSizeClose = CGFloat(24.0)
+            imageViewClose.contentMode = .scaleAspectFit
+            imageViewClose.image = closeIcon//UIImage(named: "closeDark")
+            imageViewClose.backgroundColor = .clear
+            imageViewClose.translatesAutoresizingMaskIntoConstraints = false
+            holderView.addSubview(imageViewClose)
+            imageViewClose.trailingAnchor.constraint(equalTo: holderView.trailingAnchor, constant: 10.0).isActive = true
+            imageViewClose.topAnchor.constraint(equalTo: holderView.topAnchor, constant: 0.0).isActive = true
+            imageViewClose.widthAnchor.constraint(equalToConstant: imageSizeClose).isActive = true
+            imageViewClose.heightAnchor.constraint(equalToConstant: imageSizeClose).isActive = true
+            imageViewClose.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeAlertView)))
+        }
+        
         if !isLargeIcon {
             stackView.addArrangedSubview(holderView)
         } else {
@@ -192,7 +251,7 @@ public class AlertView: UIView {
         messageLabel?.font = UIFont.systemFont(ofSize: 14.0)
         messageLabel?.textAlignment = align
         messageLabel?.lineBreakMode = .byWordWrapping
-        messageLabel?.textColor = .descriptionTextColor
+        messageLabel?.textColor = .appDisableGray
         messageLabel?.numberOfLines = 0
         if let attributedMessage = attributedMessage {
             messageLabel?.attributedText = attributedMessage
@@ -229,7 +288,6 @@ public class AlertView: UIView {
         }
     }
     
-    // swiftlint:disable function_body_length
     private func align(buttons: [UIButton]) {
         if buttons.count == 1 {
             let firstButton = buttons[0]
@@ -246,40 +304,42 @@ public class AlertView: UIView {
             firstButton.trailingAnchor.constraint(equalTo: holderView.trailingAnchor, constant: 0.0).isActive = true
             holderView.layoutIfNeeded()
             stackView.addArrangedSubview(holderView)
-        } else if buttons.count == 2 {
-            var firstButton = buttons[0]
-            let secondButton = buttons[1]
-            if firstButton.isKind(of: PrimaryButton.self) && secondButton.isKind(of: SecondaryButton.self) {
-                if let primaryButton = firstButton as? PrimaryButton {
-                    primaryButton.buttonText = primaryButton.buttonText.uppercased()
-                    firstButton = primaryButton
-                }
-            }
-            let holderView = UIView()
-            holderView.addSubview(secondButton)
-            holderView.addSubview(firstButton)
-            let holderViewHeightConstraint = holderView.heightAnchor.constraint(equalToConstant: 60.0)
-            holderViewHeightConstraint.priority = UILayoutPriority(999)
-            holderViewHeightConstraint.isActive = true
-            secondButton.topAnchor.constraint(equalTo: holderView.topAnchor, constant: 6.0).isActive = true
-            let secondButtonBottomConstraint = secondButton.bottomAnchor.constraint(equalTo: holderView.bottomAnchor, constant: -16.0)
-            secondButtonBottomConstraint.priority = UILayoutPriority(999)
-            secondButtonBottomConstraint.isActive = true
-            secondButton.leadingAnchor.constraint(equalTo: holderView.leadingAnchor, constant: 0.0).isActive = true
-            let secondButtonTrailingConstraint = secondButton.trailingAnchor.constraint(equalTo: holderView.centerXAnchor, constant: -6.0)
-            secondButtonTrailingConstraint.priority = UILayoutPriority(999)
-            secondButtonTrailingConstraint.isActive = true
-            firstButton.topAnchor.constraint(equalTo: holderView.topAnchor, constant: 6.0).isActive = true
-            let firstButtonBottomConstraint = firstButton.bottomAnchor.constraint(equalTo: holderView.bottomAnchor, constant: -16.0)
-            firstButtonBottomConstraint.priority = UILayoutPriority(999)
-            firstButtonBottomConstraint.isActive = true
-            firstButton.leadingAnchor.constraint(equalTo: holderView.centerXAnchor, constant: 6.0).isActive = true
-            let firstButtonTrailingAnchor = firstButton.trailingAnchor.constraint(equalTo: holderView.trailingAnchor, constant: 0.0)
-            firstButtonTrailingAnchor.priority = UILayoutPriority(999)
-            firstButtonTrailingAnchor.isActive = true
-            holderView.layoutIfNeeded()
-            stackView.addArrangedSubview(holderView)
-        } else if buttons.count > 2 {
+        }
+//        } else if buttons.count == 2 {
+//            var firstButton = buttons[0]
+//            let secondButton = buttons[1]
+//            if firstButton.isKind(of: PrimaryButton.self) && secondButton.isKind(of: SecondaryButton.self) {
+//                if let primaryButton = firstButton as? PrimaryButton {
+//                    primaryButton.buttonText = primaryButton.buttonText.uppercased()
+//                    firstButton = primaryButton
+//                }
+//            }
+//            let holderView = UIView()
+//            holderView.addSubview(secondButton)
+//            holderView.addSubview(firstButton)
+//            let holderViewHeightConstraint = holderView.heightAnchor.constraint(equalToConstant: 60.0)
+//            holderViewHeightConstraint.priority = UILayoutPriority(999)
+//            holderViewHeightConstraint.isActive = true
+//            secondButton.topAnchor.constraint(equalTo: holderView.topAnchor, constant: 6.0).isActive = true
+//            let secondButtonBottomConstraint = secondButton.bottomAnchor.constraint(equalTo: holderView.bottomAnchor, constant: -16.0)
+//            secondButtonBottomConstraint.priority = UILayoutPriority(999)
+//            secondButtonBottomConstraint.isActive = true
+//            secondButton.leadingAnchor.constraint(equalTo: holderView.leadingAnchor, constant: 0.0).isActive = true
+//            let secondButtonTrailingConstraint = secondButton.trailingAnchor.constraint(equalTo: holderView.centerXAnchor, constant: -6.0)
+//            secondButtonTrailingConstraint.priority = UILayoutPriority(999)
+//            secondButtonTrailingConstraint.isActive = true
+//            firstButton.topAnchor.constraint(equalTo: holderView.topAnchor, constant: 6.0).isActive = true
+//            let firstButtonBottomConstraint = firstButton.bottomAnchor.constraint(equalTo: holderView.bottomAnchor, constant: -16.0)
+//            firstButtonBottomConstraint.priority = UILayoutPriority(999)
+//            firstButtonBottomConstraint.isActive = true
+//            firstButton.leadingAnchor.constraint(equalTo: holderView.centerXAnchor, constant: 6.0).isActive = true
+//            let firstButtonTrailingAnchor = firstButton.trailingAnchor.constraint(equalTo: holderView.trailingAnchor, constant: 0.0)
+//            firstButtonTrailingAnchor.priority = UILayoutPriority(999)
+//            firstButtonTrailingAnchor.isActive = true
+//            holderView.layoutIfNeeded()
+//            stackView.addArrangedSubview(holderView)
+//        } else if buttons.count > 2 {
+         else {
             let holderView = UIView()
             let holderViewHeightConstraint = holderView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0)
             holderViewHeightConstraint.priority = UILayoutPriority(999)
@@ -368,6 +428,9 @@ public class AlertView: UIView {
     private func createDefaultButtonBy(action: AlertAction) -> UIButton {
         let primaryButton = PrimaryButton()
         primaryButton.translatesAutoresizingMaskIntoConstraints = false
+        primaryButton.layer.cornerRadius = 5.3
+        primaryButton.height(constant: 32)
+        primaryButton.clipsToBounds = true
         primaryButton.buttonText = action.title ?? ""
         primaryButton.isEnabled = true
         primaryButton.buttonAction { [weak self] (_) in
@@ -398,6 +461,9 @@ public class AlertView: UIView {
     private func createCancelButtonBy(action: AlertAction) -> UIButton {
         let secondaryButton = SecondaryButton()
         secondaryButton.translatesAutoresizingMaskIntoConstraints = false
+        secondaryButton.layer.cornerRadius = 5.3
+        secondaryButton.height(constant: 32)
+        secondaryButton.clipsToBounds = true
         secondaryButton.buttonText = action.title ?? ""
         secondaryButton.isEnabled = true
         secondaryButton.buttonAction { [weak self] (_) in
@@ -413,8 +479,11 @@ public class AlertView: UIView {
     private func createDestructiveButtonBy(action: AlertAction) -> UIButton {
         let secondaryButton = SecondaryButton()
         secondaryButton.translatesAutoresizingMaskIntoConstraints = false
+        secondaryButton.layer.cornerRadius = 5.3
+        secondaryButton.height(constant: 32)
+        secondaryButton.clipsToBounds = true
         secondaryButton.buttonColor = .appRed
-        secondaryButton.buttonActiveColor = .appDarkRed
+        secondaryButton.buttonActiveColor = .appRed
         secondaryButton.buttonText = action.title ?? ""
         secondaryButton.isEnabled = true
         secondaryButton.buttonAction { [weak self] (_) in
@@ -427,7 +496,10 @@ public class AlertView: UIView {
         return secondaryButton
     }
     
-    private func createTextField(placeHolder: String?, initialText: String?, isEnabled: Bool, maxLength: Int, acceptables: CharacterSet?, keyboardType: UIKeyboardType?, minLength: Int? = 0) {
+    private func createTextField(
+        placeHolder: String?, initialText: String?, isEnabled: Bool, maxLength: Int, acceptables: CharacterSet?,
+        keyboardType: UIKeyboardType?, minLength: Int? = 0
+    ) {
         let holderView = UIView()
         if let minLength = minLength, minLength > 0 {
             let placeHolder = placeHolder.withDefault("Bu alan".localized).capitalizeFirst()
@@ -524,4 +596,16 @@ public class AlertView: UIView {
         }
     }
     
+}
+
+extension Int {
+    public var string: String {
+        return String(self)
+    }
+}
+
+extension Int64 {
+    public var string: String {
+        return String(self)
+    }
 }

@@ -56,7 +56,7 @@ public class InfoView: UIView {
         }
         
         infoButton.isHidden = !viewModel.hasInfoIcon
-        infoButton.setImage(UIImage(named: "info_orange", in: .uiComp, compatibleWith: nil), for: .normal)
+        infoButton.setImage(UIImage(named: "info_orange", in: .comp, compatibleWith: nil), for: .normal)
     }
 }
 

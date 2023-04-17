@@ -16,7 +16,7 @@ class NewItemBarButton: UIBarButtonItem {
         self.callback = callback
         let button = UIButton(type: .custom)
         button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        let image = UIImage(named: "plus", in: Bundle.uiComp, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: "plus", in: Bundle.comp, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(didNewItemBarButton), for: .touchUpInside)
         self.customView = button
