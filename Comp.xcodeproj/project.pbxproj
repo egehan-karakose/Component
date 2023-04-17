@@ -89,7 +89,6 @@
 		B072A13B27F0744000419BF1 /* FormTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072A13927F0744000419BF1 /* FormTextFieldCell.swift */; };
 		B072A14227F0757E00419BF1 /* BadgeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072A13D27F0757E00419BF1 /* BadgeBarButtonItem.swift */; };
 		B072A14327F0757E00419BF1 /* HomeBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072A13E27F0757E00419BF1 /* HomeBarButton.swift */; };
-		B072A14427F0757E00419BF1 /* LanguageBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072A13F27F0757E00419BF1 /* LanguageBarButton.swift */; };
 		B072A14527F0757E00419BF1 /* FilterBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072A14027F0757E00419BF1 /* FilterBarButtonItem.swift */; };
 		B072A14627F0757E00419BF1 /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072A14127F0757E00419BF1 /* BarButtonItem.swift */; };
 		B072A14A27F0763C00419BF1 /* FormBasicPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072A14827F0763C00419BF1 /* FormBasicPickerCell.swift */; };
@@ -204,7 +203,6 @@
 		B072A13927F0744000419BF1 /* FormTextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextFieldCell.swift; sourceTree = "<group>"; };
 		B072A13D27F0757E00419BF1 /* BadgeBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeBarButtonItem.swift; sourceTree = "<group>"; };
 		B072A13E27F0757E00419BF1 /* HomeBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBarButton.swift; sourceTree = "<group>"; };
-		B072A13F27F0757E00419BF1 /* LanguageBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageBarButton.swift; sourceTree = "<group>"; };
 		B072A14027F0757E00419BF1 /* FilterBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBarButtonItem.swift; sourceTree = "<group>"; };
 		B072A14127F0757E00419BF1 /* BarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
 		B072A14827F0763C00419BF1 /* FormBasicPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormBasicPickerCell.swift; sourceTree = "<group>"; };
@@ -490,7 +488,6 @@
 				B072A14127F0757E00419BF1 /* BarButtonItem.swift */,
 				B072A14027F0757E00419BF1 /* FilterBarButtonItem.swift */,
 				B072A13E27F0757E00419BF1 /* HomeBarButton.swift */,
-				B072A13F27F0757E00419BF1 /* LanguageBarButton.swift */,
 			);
 			path = BarButtons;
 			sourceTree = "<group>";
@@ -760,7 +757,6 @@
 				B072A0D927F06F2E00419BF1 /* SkyFloatingLabelTextField.swift in Sources */,
 				B072A13427F0721E00419BF1 /* JMStringMask.swift in Sources */,
 				B072A14627F0757E00419BF1 /* BarButtonItem.swift in Sources */,
-				B072A14427F0757E00419BF1 /* LanguageBarButton.swift in Sources */,
 				B072A10327F070B000419BF1 /* BaseButton.swift in Sources */,
 				B072A12727F0712B00419BF1 /* FormController+Info.swift in Sources */,
 				B072A11F27F0712B00419BF1 /* FormController+Helpers.swift in Sources */,

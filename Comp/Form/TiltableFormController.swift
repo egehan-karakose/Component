@@ -99,16 +99,16 @@ open class TiltableFormController: FormController {
     
     private func getShakeCount() -> Int {
         guard let identifier = controllerIdentifier else { return 0 }
-        let defaultsKey = BaseDefaultsKeys.string(value: identifier)
-        let shakeCount = BaseDefaults.shared.retrieveInt(with: defaultsKey) ?? 0
+        let defaultsKey = AppDefaultsKeys.string(value: identifier)
+        let shakeCount = AppDefaults.shared.retrieveInt(with: defaultsKey) ?? 0
         return shakeCount
     }
     
     private func raiseShakeCount() {
         guard let identifier = controllerIdentifier else { return }
-        let defaultsKey = BaseDefaultsKeys.string(value: identifier)
+        let defaultsKey = AppDefaultsKeys.string(value: identifier)
         let shakeCount = getShakeCount()
-        BaseDefaults.shared.storeInt(with: defaultsKey, value: shakeCount + 1)
+        AppDefaults.shared.storeInt(with: defaultsKey, value: shakeCount + 1)
     }
     
 }
