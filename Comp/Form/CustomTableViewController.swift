@@ -130,7 +130,7 @@ open class CustomTableViewController: UIViewController, UIScrollViewDelegate {
         tableView.tableHeaderView?.tag = initialTableHeaderViewTag
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 38))
         tableView.tableFooterView?.tag = initialTableFooterViewTag
-        tableView.backgroundColor = .appBackgroundGray
+        tableView.backgroundColor = .appWhiteBackground
         tableView.delaysContentTouches = false
         tableView.estimatedRowHeight = 50
         tableView.estimatedSectionHeaderHeight = 50
@@ -142,7 +142,7 @@ open class CustomTableViewController: UIViewController, UIScrollViewDelegate {
         bottomStackView.alignment = .fill
         bottomStackView.distribution = .fill
         bottomStackView.spacing = 4
-        bottomStackView.backgroundColor = .appBackgroundGray
+        bottomStackView.backgroundColor = .appWhiteBackground
         
         topStackView = .init(arrangedSubviews: [])
         topStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -187,7 +187,7 @@ open class CustomTableViewController: UIViewController, UIScrollViewDelegate {
             .constraint(equalTo: tableView.bottomAnchor)
         tableViewUnfocusedBottomConstraint?.isActive = true
         
-        view.backgroundColor = .appBackgroundGray
+        view.backgroundColor = .appWhiteBackground
         view.addSubview(holderView)
         view.embed(childView: holderView)
         
@@ -196,8 +196,8 @@ open class CustomTableViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    public func layoutViewsFor(isSky: Bool) {
-        view.backgroundColor = isSky ? .skyBlue : .appBackgroundGray
+    public func layoutViewsFor() {
+        view.backgroundColor = .appWhiteBackground
         if let navigationController = navigationController {
             if #available(iOS 13.0, *) {
                 let navBarAppearance = UINavigationBarAppearance()
@@ -206,10 +206,10 @@ open class CustomTableViewController: UIViewController, UIScrollViewDelegate {
                 navBarAppearance.buttonAppearance = buttonAppearance
                 navBarAppearance.doneButtonAppearance = buttonAppearance
                 navBarAppearance.backButtonAppearance = buttonAppearance
-                navBarAppearance.backgroundColor = isSky ? .skyBlue : .appYellow
+                navBarAppearance.backgroundColor = .appMainBackgroundColor
                 
                 navBarAppearance.titleTextAttributes = [
-                    .foregroundColor: isSky ? UIColor.white : UIColor.navigationTitle,
+                    .foregroundColor: UIColor.appBlack1,
                     .font: UIFont.black(of: 16)
                 ]
                 if navigationController.navigationBar.responds(to: #selector(setter: UINavigationItem.standardAppearance)) {
@@ -218,8 +218,8 @@ open class CustomTableViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
             } else {
-                navigationController.navigationBar.backgroundColor = isSky ? .skyBlue : .appYellow
-                navigationController.navigationBar.tintColor = isSky ? .white : .navigationTitle
+                navigationController.navigationBar.backgroundColor = .appMainBackgroundColor
+                navigationController.navigationBar.tintColor = .appBlack1
                 navigationController.navigationBar.isTranslucent = false
             }
         }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Common
 
 public final class CollapsibleFormSection: FormSection {
     
@@ -68,7 +69,7 @@ public final class CollapsibleFormSection: FormSection {
     
     private func createHeaderContainerView() -> UIView {
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 73))
-        containerView.backgroundColor = .appBackgroundGray
+        containerView.backgroundColor = .appWhiteBackground
         return containerView
     }
     
@@ -117,7 +118,7 @@ public final class CollapsibleFormSection: FormSection {
     }
     
     private func getTopFormController() -> FormController? {
-        return AlertManager.getTopViewController() as? FormController
+        return getTopMostViewController() as? FormController
     }
     
     fileprivate func setDockedRows(with indexes: [Int]?) {

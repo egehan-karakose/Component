@@ -16,7 +16,7 @@ public class BaseTextFieldCounterRightView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
         label.font = UIFont.systemFont(ofSize: 9.0)
-        label.textColor = .appLightGray
+        label.textColor = .appTextGray
         return label
     }()
     

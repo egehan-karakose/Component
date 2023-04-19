@@ -57,7 +57,7 @@ public class ImageButton: UIButton {
     
     public func populate(with viewModel: ImageButtonViewModelProtocol) {
         self.viewModel = viewModel
-        setTitleColor(viewModel.color ?? .appOrange, for: .normal)
+        setTitleColor(viewModel.color ?? .appMainDarkBackground, for: .normal)
         setImage(viewModel.image, for: .normal)
         setTitle(viewModel.title, for: .normal)
         if viewModel.rightToLeft~ {

@@ -91,7 +91,7 @@ public class PrimaryButton: UIButton {
     public func setStyle() {
         if isEnabled {
             label.textColor = .white
-            contentView.backgroundColor = .appYellow
+            contentView.backgroundColor = .appMainBackgroundColor
             contentView.layer.borderColor = UIColor.clear.cgColor
             contentView.layer.borderWidth = 0.0
             contentView.alpha = 1.0
@@ -125,7 +125,7 @@ public class PrimaryButton: UIButton {
     @objc func touchDownAction(button: UIButton) {
         if isEnabled {
             label.textColor = .white
-            contentView.backgroundColor = .appYellow
+            contentView.backgroundColor = .appMainBackgroundColor
             contentView.layer.borderColor = UIColor.clear.cgColor
             contentView.layer.borderWidth = 0.0
             contentView.alpha = 0.3

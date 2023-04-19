@@ -68,7 +68,7 @@ public class SecondaryButton: UIButton {
         label.fitInto(view: contentView, paddings: textPadding)
     }
     
-    private var _buttonColor: UIColor = .appYellow
+    private var _buttonColor: UIColor = .appMainBackgroundColor
     public var buttonColor: UIColor {
         get {
             return _buttonColor
@@ -79,7 +79,7 @@ public class SecondaryButton: UIButton {
         }
     }
     
-    private var _buttonActiveColor: UIColor = .appOrange
+    private var _buttonActiveColor: UIColor = .appMainBackgroundColor
     public var buttonActiveColor: UIColor {
         get {
             return _buttonActiveColor

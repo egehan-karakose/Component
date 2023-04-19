@@ -56,7 +56,7 @@ public class BadgeBarButtonItem: UIBarButtonItem {
         
         let size: CGFloat = (viewModel.buttonHeight * 0.6)
         let fontColor: UIColor = .white
-        let backgroundColor: UIColor = .appRed
+        let backgroundColor: UIColor = .red
         let button = UIButton(type: .custom)
         button.setImage(viewModel.buttonImage, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit

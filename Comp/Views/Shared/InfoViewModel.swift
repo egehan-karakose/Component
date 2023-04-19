@@ -12,7 +12,7 @@ public class InfoViewModel: InfoViewModelProtocol {
     public var text: String? {
         didSet {
             let attributedText = AttributedStringBuilder()
-                .setForegroundColor(.appDarkGray)
+                .setForegroundColor(.appTextGray)
                 .setFont(.regular(of: 12))
                 .setTextAlignment(.left)
                 .setLineSpacing(lineSpacing)

@@ -1,8 +1,9 @@
 //
 //  DesignatedAlertActions.swift
-//  Comp
+//  Vakifbank
 //
-//  Created by Egehan KARAKÖSE (Dijital Kanallar Uygulama Geliştirme Müdürlüğü) on 27.03.2022.
+//  Created by Yasin TURKOGLU on 29.07.2019.
+//  Copyright © 2019 Vakifbank. All rights reserved.
 //
 
 import Foundation

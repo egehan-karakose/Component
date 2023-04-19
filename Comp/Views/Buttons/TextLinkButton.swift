@@ -73,7 +73,7 @@ public class TextLinkButton: UIButton {
         isUserInteractionEnabled = isEnabled
         isAccessibilityElement = isEnabled
         if isEnabled {
-            label.textColor = .appDarkOrange
+            label.textColor = .appMainDarkBackground
         } else {
             label.textColor = .appDisableGray
         }
@@ -82,7 +82,7 @@ public class TextLinkButton: UIButton {
     @objc func touchUpInsideAction(button: UIButton) {
         guard let receivedButtonActionClosure = buttonActionClosure else { return }
         receivedButtonActionClosure(button)
-        label.textColor = isEnabled ? .appDarkOrange : .appDisableGray
+        label.textColor = isEnabled ? .appMainDarkBackground : .lightGray
         label.alpha = 1.0
     }
     
@@ -93,7 +93,7 @@ public class TextLinkButton: UIButton {
     }
     
     @objc func touchUpOutsideCanceled(button: UIButton) {
-        label.textColor = isEnabled ? .appDarkOrange : .appDisableGray
+        label.textColor = isEnabled ? .appMainDarkBackground : .lightGray
         label.alpha = 1.0
     }
     

@@ -93,11 +93,11 @@ public class FormButton: UIButton {
     
     private func applyPrimaryStyle() {
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        setTitleColor(.backgroundWhite, for: .normal)
-        setTitleColor(.backgroundWhite, for: .disabled)
-        setBackgroundImage(UIImage(color: .appYellow), for: .normal)
-//        setBackgroundImage(UIImage(color: .appOrange), for: .highlighted)
-        setBackgroundImage(UIImage(color: .appLightGray), for: .disabled)
+        setTitleColor(.white, for: .normal)
+        setTitleColor(.white, for: .disabled)
+        setBackgroundImage(UIImage(color: .appMainBackgroundColor), for: .normal)
+//        setBackgroundImage(UIImage(color: .appMainDarkBackground), for: .highlighted)
+        setBackgroundImage(UIImage(color: .lightGray), for: .disabled)
         layer.borderWidth = 0
         layer.cornerRadius = 8
         clipsToBounds = true
@@ -105,29 +105,29 @@ public class FormButton: UIButton {
     
     private func applySecondaryStyle() {
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        setTitleColor(.appYellow, for: .normal)
-//        setTitleColor(.appOrange, for: .highlighted)
-        setTitleColor(.appLightGray, for: .disabled)
+        setTitleColor(.appMainBackgroundColor, for: .normal)
+//        setTitleColor(.appMainDarkBackground, for: .highlighted)
+        setTitleColor(.lightGray, for: .disabled)
         
-        setBackgroundImage(UIImage(color: .appBackgroundGray), for: .normal)
-        setBackgroundImage(UIImage(color: .appBackgroundGray), for: .highlighted)
+        setBackgroundImage(UIImage(color: .appWhiteBackground), for: .normal)
+        setBackgroundImage(UIImage(color: .appWhiteBackground), for: .highlighted)
         
         layer.borderWidth = 2.0
         layer.cornerRadius = 8
         clipsToBounds = true
         
         if isEnabled {
-            layer.borderColor = UIColor.appYellow.cgColor
+            layer.borderColor = UIColor.appMainBackgroundColor.cgColor
         } else {
-            layer.borderColor = UIColor.appLightGray.cgColor
+            layer.borderColor = UIColor.lightGray.cgColor
         }
     }
     
       private func applySecondaryClearStyle() {
             titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-            setTitleColor(.appYellow, for: .normal)
-    //        setTitleColor(.appOrange, for: .highlighted)
-            setTitleColor(.appLightGray, for: .disabled)
+            setTitleColor(.appMainBackgroundColor, for: .normal)
+    //        setTitleColor(.appMainDarkBackground, for: .highlighted)
+            setTitleColor(.lightGray, for: .disabled)
             
         setBackgroundImage(UIImage(color: .clear), for: .normal)
             setBackgroundImage(UIImage(color: .clear), for: .highlighted)
@@ -137,19 +137,19 @@ public class FormButton: UIButton {
             clipsToBounds = true
             
             if isEnabled {
-                layer.borderColor = UIColor.appYellow.cgColor
+                layer.borderColor = UIColor.appMainBackgroundColor.cgColor
             } else {
-                layer.borderColor = UIColor.appLightGray.cgColor
+                layer.borderColor = UIColor.lightGray.cgColor
             }
         }
     
     private func applyFormStyle() {
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        setTitleColor(.backgroundWhite, for: .normal)
-        setTitleColor(.backgroundWhite, for: .disabled)
+        setTitleColor(.appWhiteBackground, for: .normal)
+        setTitleColor(.appWhiteBackground, for: .disabled)
         setBackgroundImage(UIImage(color: UIColor(rgb: 0x131313, alpha: 1)), for: .normal)
         setBackgroundImage(UIImage(color: .appBlack1), for: .highlighted)
-        setBackgroundImage(UIImage(color: .appLightGray), for: .disabled)
+        setBackgroundImage(UIImage(color: .lightGray), for: .disabled)
         layer.borderWidth = 0
         layer.cornerRadius = 0
         clipsToBounds = true

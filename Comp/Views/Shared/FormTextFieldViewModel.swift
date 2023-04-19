@@ -261,7 +261,7 @@ public class FormTextFieldCountViewModel: FormTextFieldViewModel {
         accessoryLabel = UILabel()
         calculateAccessoryLabelText()
         accessoryLabel.font = .regular(of: 11)
-        accessoryLabel.textColor = .appDarkGray
+        accessoryLabel.textColor = .darkGray
         accessoryView = accessoryLabel
     }
     

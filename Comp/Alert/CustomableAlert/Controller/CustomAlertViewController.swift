@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Extensioncommon
 
 //swiftlint:enable file_length
 // swiftlint:disable function_parameter_count
@@ -172,22 +173,6 @@ public class CustomAlertViewController: UIViewController {
             self.alertDecorator = alertDecorator
         }
         
-        private func getTopMostViewController(base: UIViewController? =
-                                                UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-            if let nav = base as? UINavigationController {
-                return getTopMostViewController(base: nav.visibleViewController)
-            }
-            if let tab = base as? UITabBarController {
-                if let selected = tab.selectedViewController {
-                    return getTopMostViewController(base: selected)
-                }
-            }
-            if let presented = base?.presentedViewController {
-                return getTopMostViewController(base: presented)
-            }
-            return base
-        }
-        
         @discardableResult
         public func setAutoCloseEnabled(isEnabled: Bool, duration: Int = 15) -> Builder {
             self.autoClose = isEnabled
@@ -233,7 +218,7 @@ public class CustomAlertViewController: UIViewController {
         }
         
         public func show() {
-            guard let viewController = self.getTopMostViewController() else { return }
+            guard let viewController = getTopMostViewController() else { return }
             let alertController = CustomAlertViewController(contentView: contentView, alertDecorator: alertDecorator,
                                                             autoClose: autoClose, timerLimit: timerLimit,
                                                             closeTappedAround: closeTappedAround, closableZoneRatio: closableZoneRatio,

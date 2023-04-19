@@ -179,7 +179,7 @@ public class FormSection {
     public var rows: [FormRowDataSource]?
     public var footerView: UIView?
     public var headerView: UIView?
-    public var backGroundColor: UIColor = UIColor.appBackgroundGray
+    public var backGroundColor: UIColor = UIColor.appDisableGray
 
     public init() { }
     

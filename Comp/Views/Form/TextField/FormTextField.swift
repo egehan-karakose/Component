@@ -103,10 +103,10 @@ public class FormTextField: UIView {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         titleLabel.addGestureRecognizer(tapGestureRecognizer)
         titleLabel.isUserInteractionEnabled = true
-        titleLabel.textColor = .appGray
+        titleLabel.textColor = .gray
         textField.delegate = self
         textField.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
-        textField.tintColor = .appOrange
+        textField.tintColor = .appMainDarkBackground
         textField.textColor = .appBlack2
         populateInner(with: innerViewModel)
     }
@@ -160,7 +160,7 @@ public class FormTextField: UIView {
             if viewModel.disabledTextColor != nil {
                 textField.textColor = viewModel.disabledTextColor
             } else {
-                textField.textColor = UIColor.appGray
+                textField.textColor = UIColor.gray
             }
         }
         if let autocapitalizationType = viewModel.autocapitalizationType {
@@ -396,9 +396,9 @@ extension FormTextField {
         }
         
         var titleLabelColor: UIColor {
-            if viewState == .editing { return .appOrange }
-            if errorText != nil && !isTextEmpty { return .appRed }
-            return .appGray
+            if viewState == .editing { return .appMainDarkBackground }
+            if errorText != nil && !isTextEmpty { return .red }
+            return .gray
         }
         
         var isTextFieldVisible: Bool {
@@ -407,15 +407,15 @@ extension FormTextField {
         }
         
         var lineViewBackgroundColor: UIColor {
-            if viewState == .editing { return .appOrange }
-            if errorText != nil { return .appRed }
-            return .appLightGray
+            if viewState == .editing { return .appMainDarkBackground }
+            if errorText != nil { return .red }
+            return .lightGray
         }
         
         var descriptionLabelTextColor: UIColor { // +
-            if errorText != nil { return .appRed }
-            if viewState == .error { return .appRed }
-            return .appLightGray
+            if errorText != nil { return .red }
+            if viewState == .error { return .red }
+            return .lightGray
         }
         
         var descriptionLabelText: String? { // +

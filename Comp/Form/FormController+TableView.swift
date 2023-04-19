@@ -48,7 +48,7 @@ extension FormController: UITableViewDataSource, UITableViewDelegate {
             let viewModel = FormSectionHeaderViewModel()
             let titleLabel = UILabel()
             titleLabel.font = .light(of: 16)
-            titleLabel.textColor = .appGray
+            titleLabel.textColor = .gray
             titleLabel.text = formSection?.title
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -64,7 +64,7 @@ extension FormController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView {
             let backgroundView = UIView()
-			backgroundView.backgroundColor = shouldShowEmptyDataView() ?? false ? .clear : .appBackgroundGray 
+			backgroundView.backgroundColor = shouldShowEmptyDataView() ?? false ? .clear : .appWhiteBackground
             headerView.backgroundView = backgroundView
         }
     }
@@ -197,7 +197,7 @@ extension FormController: UITableViewDataSource, UITableViewDelegate {
                 success(true)
             }
             deleteAction.image = UIImage(named: "trash")
-            deleteAction.backgroundColor = .appRed
+            deleteAction.backgroundColor = .red
             return UISwipeActionsConfiguration(actions: [deleteAction])
         } else if let rowEditingAction = row?.rowEditingAction {
             let action = UIContextualAction(style: .normal, title: nil) { _, _, success in

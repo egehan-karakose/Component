@@ -228,21 +228,6 @@ public class AlertManager {
         return baseNavigationController.viewControllers[0]
     }
     
-    public class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-        if let nav = base as? UINavigationController {
-            return getTopViewController(base: nav.visibleViewController)
-        }
-        if let tab = base as? UITabBarController {
-            if let selected = tab.selectedViewController {
-                return getTopViewController(base: selected)
-            }
-        }
-        if let presented = base?.presentedViewController {
-            return getTopViewController(base: presented)
-        }
-        return base
-    }
-    
     private class func getAlertHolderView() -> AlertHolderView! {
         guard let currentViewController = getRootViewController(),
             let view = currentViewController.view,

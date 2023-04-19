@@ -35,12 +35,12 @@ public class BaseTextField: SkyFloatingLabelTextField {
     
     private func style() {
         backgroundColor = .white
-        tintColor = .appOrange
-        textColor = .defaultTextColor
-        lineColor = .appLightGray
-        selectedTitleColor = .appOrange
-        selectedLineColor = .appOrange
-        errorColor = .appRed
+        tintColor = .appMainDarkBackground
+        textColor = .appTextBlack
+        lineColor = .lightGray
+        selectedTitleColor = .appMainDarkBackground
+        selectedLineColor = .appMainDarkBackground
+        errorColor = .red
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: padding, height: 20))
         leftView = paddingView
         leftViewMode = .always

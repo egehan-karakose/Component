@@ -14,7 +14,7 @@ public extension UILabel {
     static let cardMask = JMStringMask(mask: "---- ---- ---- ----")
 
     // swiftlint:disable line_length
-    func setBoldRateValue(with value: String, boldSize: CGFloat = 20, regularSize: CGFloat = 16, colorize: Bool = false, divider: Character = ".", defaultColor: UIColor = .defaultTextColor, isFractionalBold: Bool = false) {
+    func setBoldRateValue(with value: String, boldSize: CGFloat = 20, regularSize: CGFloat = 16, colorize: Bool = false, divider: Character = ".", defaultColor: UIColor = .appTextGray, isFractionalBold: Bool = false) {
         let colorAttrs = defaultColor
         
         let normalAttrs = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: boldSize),
@@ -25,30 +25,7 @@ public extension UILabel {
         
        setRateValue(value: value, divider: divider, normalAttrs: normalAttrs, fractionalAttrs: fractionalAttrs)
     }
-    
-    func setBoldCurrencyValue(with value: Double, boldSize: CGFloat = 20, regularSize: CGFloat = 16, colorize: Bool = false, currency: String = "TL", defaultColor: UIColor = .defaultTextColor, isFractionalBold: Bool = false) {
-        let colorAttrs = colorize ? value > 0 ? .appGreen :  defaultColor : defaultColor
-        
-        let normalAttrs = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: boldSize),
-                           NSAttributedString.Key.foregroundColor: colorAttrs]
-        let fractionalAttrs = [NSAttributedString.Key.font: isFractionalBold ?
-            UIFont.boldSystemFont(ofSize: regularSize) : UIFont.systemFont(ofSize: regularSize),
-                               NSAttributedString.Key.foregroundColor: colorAttrs]
-        
-       setCurrencyValue(value: value, currency: currency, normalAttrs: normalAttrs, fractionalAttrs: fractionalAttrs)
-    }
-    
-    func setRegularCurrencyValue(with value: Double, regularSize: CGFloat = 20, lightSize: CGFloat = 16, colorize: Bool = false, currency: String = "TL", defaultColor: UIColor = .defaultTextColor) {
-        let colorAttrs = colorize ? value > 0 ? .appGreen : defaultColor : defaultColor
-        
-        let normalAttrs = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: regularSize),
-                           NSAttributedString.Key.foregroundColor: colorAttrs]
-        let fractionalAttrs = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: lightSize, weight: .light),
-                               NSAttributedString.Key.foregroundColor: colorAttrs]
-        
-        setCurrencyValue(value: value, currency: currency, normalAttrs: normalAttrs, fractionalAttrs: fractionalAttrs)
-    }
-    
+
     private func setRateValue(value: String, divider: Character, normalAttrs: [NSAttributedString.Key: NSObject], fractionalAttrs: [NSAttributedString.Key: NSObject]) {
         
         let normalSideString = NSMutableAttributedString(string: value, attributes: normalAttrs)

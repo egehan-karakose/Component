@@ -134,7 +134,7 @@ extension ErrorMessageDisplayProtocol where Self: UIView {
         label.alpha = 0.0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.textColor = .appRed
+        label.textColor = .red
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.numberOfLines = 0
         guard let maskView = getMaskView() else { return label }

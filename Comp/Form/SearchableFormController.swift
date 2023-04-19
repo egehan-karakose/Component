@@ -109,7 +109,7 @@ open class SearchableFormController: TiltableFormController, UISearchResultsUpda
         searchController?.searchBar.placeholder = searchTextPlaceholder ?? "Ara".localized
         searchController?.hidesNavigationBarDuringPresentation = false
         searchController?.searchBar.searchBarStyle = .minimal
-        searchController?.searchBar.tintColor = .appYellow
+        searchController?.searchBar.tintColor = .appMainBackgroundColor
         searchController?.searchBar.textField?.addToolBar()
         searchController?.searchBar.subviews.forEach({ (view) in
             view.subviews.forEach({ (subView) in
@@ -117,7 +117,7 @@ open class SearchableFormController: TiltableFormController, UISearchResultsUpda
                     if let textField = subView as? UITextField {
                         textField.backgroundColor = .white
                         textField.borderStyle = .none
-                        textField.layer.borderColor = UIColor.appLightGray.cgColor
+                        textField.layer.borderColor = UIColor.lightGray.cgColor
                         textField.layer.borderWidth = 1
                         textField.layer.cornerRadius = 6.0
                         textField.clipsToBounds = true

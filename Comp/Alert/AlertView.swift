@@ -63,7 +63,7 @@ public class AlertView: UIView {
         stackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0).isActive = true
         
         if !hideTopInfo {
-            let view = UIImageView(image: UIImage(named: "infoIcon", in: .comp, compatibleWith: nil))
+            let view = UIImageView(image: UIImage(named: "infoIcon", in: .common, compatibleWith: nil))
             let size: CGFloat = 78
             let halfSize = size / 2
             view.frame = CGRect(x: ((UIScreen.main.bounds.size.width - 48) / 2) - halfSize,
@@ -482,8 +482,8 @@ public class AlertView: UIView {
         secondaryButton.layer.cornerRadius = 5.3
         secondaryButton.height(constant: 32)
         secondaryButton.clipsToBounds = true
-        secondaryButton.buttonColor = .appRed
-        secondaryButton.buttonActiveColor = .appRed
+        secondaryButton.buttonColor = .appMainBackgroundColor
+        secondaryButton.buttonActiveColor = .appMainBackgroundColor
         secondaryButton.buttonText = action.title ?? ""
         secondaryButton.isEnabled = true
         secondaryButton.buttonAction { [weak self] (_) in

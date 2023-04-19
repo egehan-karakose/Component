@@ -46,7 +46,7 @@ public class TextButton: UIButton {
     
     private func setup() {
         addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-        setTitleColor(.appOrange, for: .normal)
+        setTitleColor(.appMainDarkBackground, for: .normal)
         titleLabel?.font = .medium(of: 14)
         titleLabel?.setContentCompressionResistancePriority(.required, for: .vertical)
         titleLabel?.setContentCompressionResistancePriority(.required, for: .horizontal)

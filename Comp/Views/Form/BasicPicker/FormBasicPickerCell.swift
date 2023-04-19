@@ -69,7 +69,7 @@ public class FormBasicPickerCell: UITableViewCell {
         
         if let valueText = viewModel?.valueText {
             titleLabel.font = UIFont.regular(of: 12)
-            titleLabel.textColor = .appGray
+            titleLabel.textColor = .gray
             valueLabel.isHiddenInStackView = false
             mainStackViewTopConstraint.constant = 18
             valueLabel.text = valueText
@@ -79,7 +79,7 @@ public class FormBasicPickerCell: UITableViewCell {
             }
         } else {
             titleLabel.font = UIFont.regular(of: 14)
-            titleLabel.textColor = .appGray
+            titleLabel.textColor = .gray
             valueLabel.isHiddenInStackView = true
             mainStackViewTopConstraint.constant = 36
             valueLabel.text = nil
@@ -93,7 +93,7 @@ public class FormBasicPickerCell: UITableViewCell {
             accesoryView.alpha = 1
             accesoryView.isHidden = false
         } else {
-            valueLabel.textColor = UIColor.appGray
+            valueLabel.textColor = UIColor.gray
             accesoryView.alpha = 0.5
             accesoryView.isHidden = true
         }
@@ -102,15 +102,15 @@ public class FormBasicPickerCell: UITableViewCell {
         }
         
         if viewModel?.errorText != nil {
-            lineView.backgroundColor = .appRed
-            descriptionLabel.textColor = .appRed
+            lineView.backgroundColor = .red
+            descriptionLabel.textColor = .red
             descriptionLabel.text = viewModel?.errorText
             descriptionLabel.isHiddenInStackView = false
             mainStackViewBottomConstraint.constant = 3
 
         } else {
             //dispatch koymamın tek nedeni bu olmadan tablette renk kırmızı kalması. Muhtemelen apple bugı bu durum.
-            lineView.backgroundColor = .appLightGray
+            lineView.backgroundColor = .lightGray
             descriptionLabel.isHiddenInStackView = true
             mainStackViewBottomConstraint.constant = 0
         }
@@ -144,9 +144,9 @@ public class FormBasicPickerCell: UITableViewCell {
         
         if !selected && animated {
             if self.viewModel?.errorText != nil {
-                self.lineView.backgroundColor = .appRed
+                self.lineView.backgroundColor = .red
             } else {
-                self.lineView.backgroundColor = .appLightGray
+                self.lineView.backgroundColor = .gray
             }
         }
     }

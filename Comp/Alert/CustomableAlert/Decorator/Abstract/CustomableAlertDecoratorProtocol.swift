@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol CustomableAlertDecoratorProtocol: class {
+public protocol CustomableAlertDecoratorProtocol: AnyObject {
     
     var mainView: UIView? { get set }
     

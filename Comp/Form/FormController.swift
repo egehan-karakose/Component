@@ -110,7 +110,7 @@ open class FormController: CustomTableViewController {
     }
     
     private func updateSeparators() {
-        tableView.separatorColor = isFormScreen == true ? .clear : .appLightGray
+        tableView.separatorColor = isFormScreen == true ? .clear : .lightGray
         if isFormScreen == true {
             tableView.separatorStyle = .none
         } else {

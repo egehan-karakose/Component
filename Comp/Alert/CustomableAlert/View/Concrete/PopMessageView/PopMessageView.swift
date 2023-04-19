@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Extensioncommon
 
 public class PopMessageViewModel {
     public var timerLimit = 4
@@ -89,7 +90,7 @@ public class PopMessageView: UIView {
 extension PopMessageView {
     
     func loadViewFromNib(nibName: String) -> UIView? {
-        let nib = UINib(nibName: nibName, bundle: Bundle.foundation)
+        let nib = UINib(nibName: nibName, bundle: Bundle.common)
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     

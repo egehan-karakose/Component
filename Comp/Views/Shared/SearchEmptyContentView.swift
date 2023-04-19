@@ -36,7 +36,7 @@ public class SearchEmptyContentView: UIView {
     
     private func setupStyle() {
         titleLabel.font = .regular(of: 14)
-        titleLabel.textColor = .appGray
+        titleLabel.textColor = .gray
         backgroundColor = .clear
     }
     
